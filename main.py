@@ -79,8 +79,8 @@ with st.container():
                     f'Meeting {date[i]}: \n Facilitator - ({curr_people[:2]}) \n Notetaker - {curr_people[2:3]} \n CleanUp - {curr_people[3:6]}')
                 st.write("---")
                 curr_people = []
-                st.subheader("Download File")
-                st.markdown(download_excel([df1, df2, df3]), unsafe_allow_html=True)
+            st.subheader("Download File")
+            st.markdown(download_excel([df1, df2, df3]), unsafe_allow_html=True)
 
 
 
