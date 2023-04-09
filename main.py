@@ -23,7 +23,7 @@ with st.container():
     left_body, right_body = st.columns([2.3, 1])
     with right_body:
         st.subheader("Date")
-        date_input = st.text_input("Enter dates (separated by commas):", placeholder="MM/DD/YYYY,MM/DD/YYYY,...")
+        date_input = st.text_input("Enter dates (separated by commas):", placeholder="MM/DD/YYYY,MM/DD/YYYY,etc")
         date = [date.strip() for date in date_input.split(",")]
         number_of_meeting = len(date)
         st.write("---")
