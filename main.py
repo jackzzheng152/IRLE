@@ -32,14 +32,16 @@ with st.container():
         num_nt = int(st.text_input("Enter # of Note Takers per Meeting", value=1))
         num_cu = int(st.text_input("Enter # of Clean Up per Meeting", value=3))
         st.write("---")
+        
+        st.write("---")
         st.subheader("Upload File")
         uploaded_file = st.file_uploader("")
         if uploaded_file is not None:
             df1 = pd.read_excel(uploaded_file, 'Facilitator')
             df2 = pd.read_excel(uploaded_file, 'NoteTaker')
-            df3 = pd.read_excel(uploaded_file, 'CleanUp')
-
+            df3 = pd.read_excel(uploaded_file, 'CleanUp')        
         st.write("---")
+        
     with left_body:
         curr_people = []
         if uploaded_file is not None:
@@ -55,6 +57,7 @@ with st.container():
                             df1.at[j, "Last Facilitated"] = date[i]
                             curr_people.append(df1['Staff Name'][j])
                             break
+                df1 = df1.sort_values(by="Last Facilitated")
                 for k in range(num_nt):
                     for j in range(total_people):
                         if df2['Last Notetaker'].notna().all():
@@ -65,6 +68,7 @@ with st.container():
                             df2.at[j, "Last Notetaker"] = date[i]
                             curr_people.append(df2['Staff Name'][j])
                             break
+                df2 = df2.sort_values(by="Last Notetaker")
                 for k in range(num_cu):
                     for j in range(total_people):
                         if df3['Set Up/Clean up'].notna().all():
@@ -75,8 +79,9 @@ with st.container():
                             df3.at[j, "Set Up/Clean up"] = date[i]
                             curr_people.append(df3['Staff Name'][j])
                             break
+                df3 = df3.sort_values(by="Set Up/Clean up")
                 st.write(
-                    f'Meeting {date[i]}: \n Facilitator - ({curr_people[:2]}) \n Notetaker - {curr_people[2:3]} \n CleanUp - {curr_people[3:6]}')
+                    f'Meeting {date[i]}: \n Facilitator - ({curr_people[:num_fac]}) \n Notetaker - {curr_people[num_fac:num_fac+num_nt]} \n CleanUp - {curr_people[num_fac+num_nt:num_fac+num_nt+num_cu]}')
                 st.write("---")
                 curr_people = []
             st.subheader("Download File")
