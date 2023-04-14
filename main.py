@@ -35,8 +35,8 @@ with st.container():
         st.subheader("Absence")
         names = []
         for i in range(number_of_meeting):
-            num_names = st.number_input(f"Enter the number of absences for meeting {i+1}:", value=number_of_meeting)
-            names.append([st.text_input(f"Name {j+1} for meeting {i+1}:") for j in range(num_names)])
+            num_names = st.number_input(f"Enter the number of absences for meeting {date[i]}:", value=number_of_meeting)
+            names.append([st.text_input(f"Name {j+1} for meeting {date[i]}:") for j in range(num_names)])
         st.write("---")
         st.subheader("Upload File")
         uploaded_file = st.file_uploader("")
@@ -50,6 +50,7 @@ with st.container():
         curr_people = []
         if uploaded_file is not None:
             for i in range(number_of_meeting):
+                curr_people = names[i]
                 total_people = len(df1['Staff Name'])
                 for k in range(num_fac):
                     for j in range(total_people):
@@ -57,7 +58,7 @@ with st.container():
                             for l in range(total_people - 6):
                                 df1.at[l, 'Last Facilitated'] = pd.NaT
                             df1 = df1.sort_values(by="Last Facilitated")
-                        if df1['Last Facilitated'][j] is pd.NaT:
+                        if df1['Last Facilitated'][j] is pd.NaT and df1['Staff Name'][j] not in curr_people:
                             df1.at[j, "Last Facilitated"] = date[i]
                             curr_people.append(df1['Staff Name'][j])
                             break
