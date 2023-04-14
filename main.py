@@ -10,7 +10,7 @@ def download_excel(df_list):
     for i, df in enumerate(df_list):
         sheet_name = ["Facilitator", "NoteTaker", "CleanUp"][i]
         df.to_excel(writer, index=False, sheet_name=sheet_name)
-    writer.save()
+    writer.close()
     excel_data = output.getvalue()
     b64 = base64.b64encode(excel_data).decode()
     href = f'<a href="data:application/octet-stream;base64,{b64}" download="schedule.xlsx">Download Excel File</a>'
@@ -85,6 +85,7 @@ with st.container():
                             curr_people.append(df3['Staff Name'][j])
                             break
                 df3 = df3.sort_values(by="Set Up/Clean up")
+                curr_people = [x for x in curr_people if x not in names[i]]
                 st.write(
                     f'Meeting {date[i]}: \n Facilitator - ({curr_people[:num_fac]}) \n Notetaker - {curr_people[num_fac:num_fac+num_nt]} \n CleanUp - {curr_people[num_fac+num_nt:num_fac+num_nt+num_cu]}')
                 st.write("---")
