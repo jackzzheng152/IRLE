@@ -34,7 +34,7 @@ with st.container():
         st.write("---")
         st.subheader("Absence")
         curr_people = []
-        absence_input = st.text_input()
+        absence_input = st.text_input("something")
         st.write("---")
         st.subheader("Upload File")
         uploaded_file = st.file_uploader("")
