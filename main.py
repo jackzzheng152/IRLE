@@ -33,8 +33,10 @@ with st.container():
         num_cu = int(st.text_input("Enter # of Clean Up per Meeting", value=3))
         st.write("---")
         st.subheader("Absence")
-        curr_people = []
-        absence_input = st.text_input("something")
+        names = []
+        for i in range(number_of_meeting):
+            num_names = st.number_input(f"Enter the number of absences for meeting {i+1}:", value=number_of_meeting)
+            names.append([st.text_input(f"Name {j+1} for meeting {i+1}:") for j in range(num_names)])
         st.write("---")
         st.subheader("Upload File")
         uploaded_file = st.file_uploader("")
@@ -45,7 +47,7 @@ with st.container():
         st.write("---")
         
     with left_body:
-        
+        curr_people = []
         if uploaded_file is not None:
             for i in range(number_of_meeting):
                 total_people = len(df1['Staff Name'])
